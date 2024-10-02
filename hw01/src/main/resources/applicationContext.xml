@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="csvQuestionDao" class="ru.otus.hw.dao.CsvQuestionDao"/>
+
+    <bean id="printStream" class="java.io.PrintStream">
+        <constructor-arg value="System.out"/>
+    </bean>
+
+    <bean id="streamsIOService" class="ru.otus.hw.service.StreamsIOService">
+        <constructor-arg name="printStream" ref="printStream"/>
+    </bean>
+
+    <bean id="testService" class="ru.otus.hw.service.TestServiceImpl">
+        <constructor-arg name="ioService" ref="streamsIOService"/>
+        <constructor-arg name="questionDao" ref="csvQuestionDao"/>
+    </bean>
+
+</beans>
