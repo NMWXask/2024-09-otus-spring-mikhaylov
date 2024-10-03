@@ -4,7 +4,9 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="csvQuestionDao" class="ru.otus.hw.dao.CsvQuestionDao"/>
+    <bean id="csvQuestionDao" class="ru.otus.hw.dao.CsvQuestionDao">
+        <constructor-arg name="csvResource" value="questions.csv"/>
+    </bean>
 
     <bean id="printStream" class="java.io.PrintStream">
         <constructor-arg value="System.out"/>

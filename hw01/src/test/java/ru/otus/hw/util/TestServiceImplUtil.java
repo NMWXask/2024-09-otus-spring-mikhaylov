@@ -1,4 +1,4 @@
-package util;
+package ru.otus.hw.util;
 
 import ru.otus.hw.domain.Answer;
 import ru.otus.hw.domain.Question;
