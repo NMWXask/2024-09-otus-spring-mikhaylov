@@ -38,8 +38,7 @@ public class CsvQuestionDao implements QuestionDao {
         InputStream inputStream = Main.class.getClassLoader().getResourceAsStream(filename);
         if (inputStream == null) {
             throw new IllegalArgumentException("Could not find resource: " + filename);
-        }
-        else {
+        } else {
             InputStreamReader streamReader =
                     new InputStreamReader(inputStream, StandardCharsets.UTF_8);
             return new BufferedReader(streamReader);
