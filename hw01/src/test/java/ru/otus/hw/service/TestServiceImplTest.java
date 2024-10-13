@@ -16,17 +16,20 @@ import static org.mockito.Mockito.when;
 @DisplayName("Tests for TestServiceImpl")
 public class TestServiceImplTest {
 
-     IOService ioService;
+    IOService ioService;
 
-     QuestionDao questionDao;
+    TestRunnerService testRunnerService;
 
-     TestServiceImpl testServiceImpl;
+    QuestionDao questionDao;
+
+    TestServiceImpl testServiceImpl;
 
     @BeforeEach
     void setUp() {
         ioService = mock(IOService.class);
+        testRunnerService = mock(TestRunnerServiceImpl.class);
         questionDao = mock(QuestionDao.class);
-        testServiceImpl = new TestServiceImpl(ioService, questionDao);
+        testServiceImpl = new TestServiceImpl(testRunnerService, ioService);
     }
 
     @Test

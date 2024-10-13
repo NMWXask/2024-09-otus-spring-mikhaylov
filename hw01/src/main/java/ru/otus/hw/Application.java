@@ -10,7 +10,7 @@ public class Application {
         ClassPathXmlApplicationContext context =
                 new ClassPathXmlApplicationContext("applicationContext.xml");
 
-        var testService = context.getBean("testService", TestService.class);
+        TestService testService = context.getBean("testService", TestService.class);
         testService.executeTest();
     }
 }

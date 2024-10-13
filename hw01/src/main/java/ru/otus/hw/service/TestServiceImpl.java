@@ -1,19 +1,21 @@
 package ru.otus.hw.service;
 
 import lombok.RequiredArgsConstructor;
-import ru.otus.hw.dao.QuestionDao;
+import ru.otus.hw.exception.QuestionReadException;
 
 @RequiredArgsConstructor
 public class TestServiceImpl implements TestService {
 
-    private final IOService ioService;
+    private final TestRunnerService testRunnerService;
 
-    private final QuestionDao questionDao;
+    private final IOService ioService;
 
     @Override
     public void executeTest() {
-        ioService.printLine("");
-        ioService.printFormattedLine("Please answer the questions below%n");
-        questionDao.findAll().forEach(System.out::println);
+        try {
+            testRunnerService.run();
+        } catch (QuestionReadException e) {
+            ioService.printFormattedLine("Error reading test data", e);
+        }
     }
 }
