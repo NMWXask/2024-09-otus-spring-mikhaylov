@@ -1,9 +1,9 @@
 package otus.spring.config;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
-@Configuration
+@Component
 public class AppConfiguration implements TestConfig, TestFileNameProvider {
 
     @Value("${rightAnswersCountToPass}")
@@ -13,7 +13,7 @@ public class AppConfiguration implements TestConfig, TestFileNameProvider {
     private String testFileName;
 
     @Override
-   public String getTestFileName() {
+    public String getTestFileName() {
         return testFileName;
     }
 
