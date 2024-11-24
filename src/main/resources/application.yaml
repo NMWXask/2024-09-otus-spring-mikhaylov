@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: 'quiz-service'
+  messages:
+    basename: i18n/messages
+    encoding: UTF-8
+    fallback-to-system-locale: false
+quiz:
+  right-answers-count-to-pass: 3
+  locale: ru-RU
+  file-name-by-locale-tag:
+    ru-RU: questions_ru.csv
+    en-US: questions.csv
+
