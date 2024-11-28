@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>hw03</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
     <name>hw03</name>
     <description>hw03</description>
     <url/>
@@ -27,7 +27,7 @@
         <url/>
     </scm>
     <properties>
-        <java.version>${java.version}</java.version>
+        <java.version>17</java.version>
     </properties>
 
     <dependencies>
