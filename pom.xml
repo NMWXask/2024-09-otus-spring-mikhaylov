@@ -26,7 +26,6 @@
         <tag/>
         <url/>
     </scm>
-    <!--Pom hw03 эксперимент-->
     <properties>
         <java.version>${java.version}</java.version>
     </properties>
