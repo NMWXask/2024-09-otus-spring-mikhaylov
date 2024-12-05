@@ -1,12 +1,10 @@
-package spring.service;
+package otus.spring.service;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import otus.spring.config.TestFileNameProvider;
 import otus.spring.dao.CsvQuestionDao;
 import otus.spring.domain.Student;
-import otus.spring.service.IOService;
-import otus.spring.service.QuizServiceImpl;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.BDDMockito.given;

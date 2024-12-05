@@ -1,8 +1,7 @@
-package spring.dao;
+package otus.spring.dao;
 
 import org.junit.jupiter.api.Test;
 import otus.spring.config.TestFileNameProvider;
-import otus.spring.dao.CsvQuestionDao;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
