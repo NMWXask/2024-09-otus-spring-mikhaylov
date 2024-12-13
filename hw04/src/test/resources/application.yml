@@ -3,11 +3,13 @@ spring:
     baseName: i18n/messages
     encoding: UTF-8
     fallbackToSystemLocale: false
+  shell:
+    interactive:
+      enabled: false
+
 quiz:
-  right-answers-count-to-pass: 3
+  rightAnswersCountToPass: 3
   locale: ru_RU
-  file-name-by-locale-tag:
+  fileNameByLocaleTag:
     ru-RU: questions_ru.csv
     en-US: questions.csv
-
-

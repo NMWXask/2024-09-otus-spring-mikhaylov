@@ -1,16 +1,14 @@
 package otus.spring.dao;
 
-import org.junit.jupiter.api.DisplayName;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.test.context.SpringBootTest;
 import otus.spring.config.AppProps;
-import static org.junit.jupiter.api.Assertions.*;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-
-@DisplayName("Test for class QuestionDaoCsv")
 @EnableConfigurationProperties(value = AppProps.class)
 @SpringBootTest
 class CsvQuestionDaoTest {
