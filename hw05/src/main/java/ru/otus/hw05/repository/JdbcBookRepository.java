@@ -2,7 +2,6 @@ package ru.otus.hw05.repository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
@@ -21,18 +20,7 @@ import java.util.Optional;
 @Repository
 @RequiredArgsConstructor
 @Slf4j
-public class BookRepositoryJdbc implements BookRepository {
-
-    private static class BookMapper implements RowMapper<Book> {
-
-        @Override
-        public Book mapRow(ResultSet resultSet, int rowNumber) throws SQLException {
-            return new Book(resultSet.getLong("b_id"), resultSet.getString("b_title"),
-                    new Author(resultSet.getLong("a_id"), resultSet.getString("name")),
-                    new Genre(resultSet.getLong("g_id"), resultSet.getString("g_name"))
-            );
-        }
-    }
+public class JdbcBookRepository implements BookRepository {
 
 
     private final NamedParameterJdbcOperations namedParameterJdbcOperations;
@@ -43,13 +31,9 @@ public class BookRepositoryJdbc implements BookRepository {
                      + "g.id as g_id, g.name as g_name from books b " +
                      "join authors a on b.author_id = a.id " +
                      "join genres g on b.genre_id = g.id where b.id = :id";
-        try {
-            return Optional.ofNullable(namedParameterJdbcOperations.queryForObject(sql,
-                    Map.of("id", id), new BookMapper()));
-        } catch (DataAccessException e) {
-            log.error("Error while fetching book by id: {}", id, e);
-            return Optional.empty();
-        }
+        return namedParameterJdbcOperations.query(sql, Map.of("id", id), new BookMapper())
+                .stream()
+                .findFirst();
     }
 
     @Override
@@ -94,5 +78,16 @@ public class BookRepositoryJdbc implements BookRepository {
                 Map.of("id", book.getId(), "title", book.getTitle(),
                         "author_id", book.getAuthor().getId(), "genre_id", book.getGenre().getId()));
         return book;
+    }
+
+    private static class BookMapper implements RowMapper<Book> {
+
+        @Override
+        public Book mapRow(ResultSet resultSet, int rowNumber) throws SQLException {
+            return new Book(resultSet.getLong("b_id"), resultSet.getString("b_title"),
+                    new Author(resultSet.getLong("a_id"), resultSet.getString("name")),
+                    new Genre(resultSet.getLong("g_id"), resultSet.getString("g_name"))
+            );
+        }
     }
 }

@@ -8,7 +8,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
-import ru.otus.hw05.model.Genre;
+import ru.otus.hw05.model.Author;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,40 +19,39 @@ import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
-public class GenreRepositoryJdbc implements GenreRepository {
+public class JdbcAuthorRepository implements AuthorRepository {
 
-    private static class GenreMapper implements RowMapper<Genre> {
-
+    private static class AuthorMapper implements RowMapper<Author> {
         @Override
-        public Genre mapRow(ResultSet resultSet, int rowNumber) throws SQLException {
+        public Author mapRow(ResultSet resultSet, int rowNumber) throws SQLException {
             long id = resultSet.getLong("id");
             String name = resultSet.getString("name");
-            return new Genre(id, name);
+            return new Author(id, name);
         }
-
     }
 
     private final NamedParameterJdbcOperations namedParameterJdbcOperations;
 
+
     @Override
-    public List<Genre> findAll() {
+    public List<Author> findAll() {
         return namedParameterJdbcOperations.getJdbcOperations()
-                .query("select g.id, g.name from genres g", new GenreMapper());
+                .query("select id, name from authors", new AuthorMapper());
     }
 
     @Override
-    public Optional<Genre> findById(long id) {
+    public Optional<Author> findById(long id) {
         try {
             return Optional.ofNullable(namedParameterJdbcOperations.queryForObject(
-                    "select id, name from genres where id=:id",
-                    Map.of("id", id), new GenreMapper()));
+                    "select id, name from authors where id = :id",
+                    Map.of("id", id), new AuthorMapper()));
         } catch (DataAccessException e) {
             return Optional.empty();
         }
     }
 
     @Override
-    public Genre save(Genre genre) {
+    public Author save(Author genre) {
         if (genre.getId() == null) {
             return insert(genre);
         }
@@ -62,23 +61,23 @@ public class GenreRepositoryJdbc implements GenreRepository {
     @Override
     public long deleteById(long id) {
         return namedParameterJdbcOperations.update(
-                "delete from genres where id = :id", Map.of("id", id));
+                "delete from authors where id = :id", Map.of("id", id));
     }
 
-    private Genre insert(Genre genre) {
+    private Author insert(Author author) {
         MapSqlParameterSource parameterSource = new MapSqlParameterSource();
-        parameterSource.addValue("name", genre.getName());
+        parameterSource.addValue("name", author.getName());
         KeyHolder keyHolder = new GeneratedKeyHolder();
         namedParameterJdbcOperations.update(
-                "insert into genres (name) values (:name)", parameterSource, keyHolder, new String[]{"id"});
-        genre.setId(Objects.requireNonNull(keyHolder.getKey()).longValue());
-        return genre;
+                "insert into authors (name) values (:name)", parameterSource, keyHolder, new String[]{"id"});
+        author.setId(Objects.requireNonNull(keyHolder.getKey()).longValue());
+        return author;
     }
 
-    private Genre update(Genre genre) {
+    private Author update(Author author) {
         namedParameterJdbcOperations.update(
-                "update genres g set g.name = :name where g.id = :id",
-                Map.of("id", genre.getId(), "name", genre.getName()));
-        return genre;
+                "update authors g set g.name = :name where g.id = :id",
+                Map.of("id", author.getId(), "name", author.getName()));
+        return author;
     }
 }
