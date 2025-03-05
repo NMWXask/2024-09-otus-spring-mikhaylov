@@ -17,7 +17,7 @@ import static org.springframework.data.jpa.repository.EntityGraph.EntityGraphTyp
 
 @Repository
 @RequiredArgsConstructor
-public class BookRepositoryJpa implements BookRepository {
+public class JpaBookRepository implements BookRepository {
 
     @PersistenceContext
     private final EntityManager em;
@@ -40,12 +40,10 @@ public class BookRepositoryJpa implements BookRepository {
 
     @Override
     public List<Book> findAll() {
-       EntityGraph<?> entityGraph = em.getEntityGraph("book-author-genre-entity-graph");
-       TypedQuery<Book> query = em.createQuery("select b from Book b " +
-               "join fetch b.author " +
-               "join fetch b.genre", Book.class);
-       query.setHint(FETCH.getKey(), entityGraph);
-       return query.getResultList();
+        EntityGraph<?> entityGraph = em.getEntityGraph("book-author-genre-entity-graph");
+        TypedQuery<Book> query = em.createQuery("SELECT b FROM Book b", Book.class);
+        query.setHint(FETCH.getKey(), entityGraph);
+        return query.getResultList();
     }
 
     @Override

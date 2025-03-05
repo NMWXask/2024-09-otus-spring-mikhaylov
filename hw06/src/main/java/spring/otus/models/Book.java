@@ -54,7 +54,7 @@ public class Book {
 
     @OneToMany(targetEntity = Comment.class, cascade = CascadeType.REMOVE, mappedBy = "book",
             orphanRemoval = true, fetch = FetchType.LAZY)
-    @Fetch(FetchMode.JOIN)
+    @Fetch(FetchMode.SUBSELECT)
     private List<Comment> comments;
 
 }

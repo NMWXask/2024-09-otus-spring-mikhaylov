@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Import;
 import spring.otus.models.Author;
 import spring.otus.models.Book;
 import spring.otus.models.Genre;
-import spring.otus.repositories.BookRepositoryJpa;
+import spring.otus.repositories.JpaBookRepository;
 
 import java.util.List;
 
@@ -19,11 +19,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("Репозиторий на основе JPA для работы с книгами ")
 @DataJpaTest
-@Import({BookRepositoryJpa.class})
-class BookRepositoryJdbcTest {
+@Import({JpaBookRepository.class})
+class JpaBookRepositoryTest {
 
     @Autowired
-    private BookRepositoryJpa bookRepositoryJpa;
+    private JpaBookRepository bookRepositoryJpa;
 
     @Autowired
     private TestEntityManager em;

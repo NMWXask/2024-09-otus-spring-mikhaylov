@@ -60,12 +60,11 @@ public class CommentServiceImpl implements CommentService {
     @Override
     @Transactional
     public Comment update(long id, String text) throws EntityNotFoundException {
-        Comment comment = findById(id).orElseThrow(
+        Comment comment = findById(id)
+                .orElseThrow(
                 () -> new EntityNotFoundException("Book with id %d not found".formatted(id))
         );
         comment.setText(text);
         return save(comment);
     }
-
-
 }

@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
-public class GenreRepositoryJpa implements GenreRepository {
+public class JpaGenreRepository implements GenreRepository {
 
     @PersistenceContext
     private final EntityManager em;

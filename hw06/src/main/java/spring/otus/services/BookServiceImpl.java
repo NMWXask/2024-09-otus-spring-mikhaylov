@@ -30,7 +30,9 @@ public class BookServiceImpl implements BookService {
     @Override
     @Transactional(readOnly = true)
     public Optional<Book> findFullById(long id) {
-        return bookRepository.findWithCommentsById(id);
+        Optional<Book> bookOptional = bookRepository.findWithCommentsById(id);
+        bookOptional.ifPresent(book -> book.getComments().size());
+        return bookOptional;
     }
 
     @Override
@@ -47,9 +49,20 @@ public class BookServiceImpl implements BookService {
     @Override
     @Transactional
     public Book update(long id, String title, long authorId, long genreId) {
-        bookRepository.findById(id)
+
+        Book book = bookRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Book with id %d not found".formatted(id)));
-        return save(id, title, authorId, genreId);
+
+        var author = authorRepository.findById(authorId)
+                .orElseThrow(() -> new EntityNotFoundException("Author with id %d not found".formatted(authorId)));
+        var genre = genreRepository.findById(genreId)
+                .orElseThrow(() -> new EntityNotFoundException("Genre with id %d not found".formatted(genreId)));
+
+        book.setTitle(title);
+        book.setAuthor(author);
+        book.setGenre(genre);
+
+        return bookRepository.save(book);
     }
 
     @Override
