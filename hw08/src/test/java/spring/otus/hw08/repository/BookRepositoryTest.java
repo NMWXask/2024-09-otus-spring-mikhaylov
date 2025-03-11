@@ -1,4 +1,4 @@
-package spring.otus.hw08;
+package spring.otus.hw08.repository;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -61,9 +61,9 @@ class BookRepositoryTest {
     }
 
     @DisplayName("должен загружать книгу по id")
+    @Test
     void shouldReturnCorrectBookById() {
-        for (int i = 0; i < dbBooks.size(); i++) {
-            var expectedBook = dbBooks.get(i);
+        for (Book expectedBook : dbBooks) {
             var actualBook = bookRepository.findById(expectedBook.getId());
             assertThat(actualBook).isPresent()
                     .get()
