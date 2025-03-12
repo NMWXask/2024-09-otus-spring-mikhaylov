@@ -1,0 +1,16 @@
+spring:
+  data:
+    mongodb:
+      authentication-database: admin
+      username: nwmxask
+      password: "123456"
+      database: book_db
+      port: 27017
+      host: localhost
+mongock:
+  runner-type: "InitializingBean"
+  change-logs-scan-package: spring.otus.hw08.changelogs
+  mongo-db:
+    write-concern:
+      journal: false
+    read-concern: local
